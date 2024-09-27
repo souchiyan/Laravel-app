@@ -1,3 +1,43 @@
+# Welcome to shift-management Web Application
+
+## 技術スタック一覧
+
+## 事前準備
+
+※`MAMP`上に`Laravel`プロジェクトが作成されており、DB設定などバックエンドの環境構築が終わっている状態を前提とします。
+
+
+- [Node.js](https://nodejs.org/en/download/package-manager)をインストール
+
+```sh
+node -v
+npm -v
+```
+
+- Reactを導入するために、Laravelプロジェクトに、Laravel UIパッケージを導入
+
+```sh
+composer require laravel/ui
+```
+
+- React を使ったフロントエンド UI をセットアップ
+```sh
+php artisan ui react --auth
+```
+>--authオプションをつけることで、Reactだけでなく、Laravel の認証機能（ログイン、登録、パスワードリセットなど）も同時にインストール
+
+- npm を使って必要なフロントエンドの依存パッケージをインストール
+```sh
+npm install
+```
+- ローカル環境でデプロイする
+```sh
+npm run dev
+```
+
+
+# Laravel
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,3 +104,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+<br>
+<br>
+
