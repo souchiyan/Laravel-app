@@ -34,6 +34,14 @@ npm install
 ```sh
 npm run dev
 ```
+<img src="./readme/npm-run-dev.png" alt="Vercel Login Step1" style="width: 60%;"/>
+
+>　停止しておく
+
+- 確認
+```
+php artisan serve
+```
 
 
 # Laravel
