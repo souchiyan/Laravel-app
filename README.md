@@ -34,7 +34,7 @@ npm install
 ```sh
 npm run dev
 ```
-<img src="./readme/npm-run-dev.png" alt="Vercel Login Step1" style="width: 60%;"/>
+<img src="./readme/npm-run-dev.png" alt="Vite development server" style="width: 60%;"/>
 
 >　停止しておく
 
