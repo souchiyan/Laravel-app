@@ -8,13 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Shift extends Model
 {
     use HasFactory;
-
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class);  
-    }
-    public function worker()
-    {
-        return $this->belongsTo(Worker::class);  //ここ悩みどころ
+        return $this->belongsTo(User::class);  //ここ悩みどころ
     }
 }
