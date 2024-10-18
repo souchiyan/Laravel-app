@@ -9,9 +9,9 @@ class Attendances extends Model
 {
     use HasFactory;
 
-    public function worker()
+    public function user()
     {
-        return $this->belongsTo(Worker::class);  //ここ悩みどころ
+        return $this->belongsTo(User::class);  //ここ悩みどころ
     }
     public function breaks()
     {

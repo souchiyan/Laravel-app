@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('body', 200);
             $table->foreignId('customer_id')->constrained();
-            $table->foreignId('admin_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
