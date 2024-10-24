@@ -17,6 +17,6 @@ class IsAdmin
         if (Auth::check() && Auth::admin()->is_admin) {
             return $next($request);
         }
-        return redirect('/'); // 管理者でない場合はindexにリダイレクト
+        return redirect('/'); // 管理者でない場合
     }
 }
