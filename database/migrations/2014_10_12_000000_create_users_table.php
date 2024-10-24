@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            // 削除したいが、認証機能に影響がありそうなのでコメントアウト
-            // $table->string('email')->unique();
-            // $table->string('phone')->unique();
-            // $table->timestamp('email_verified_at')->nullable();
+            //削除したいが、認証機能に影響がありそう
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
