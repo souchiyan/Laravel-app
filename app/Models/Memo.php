@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Memo extends Model
 {
     use HasFactory;
-    public function cutomer(){
+    public function customer(){
 
         return $this-> belongsTo(Customer::class);
     }
-    public function admin(){
+    public function user(){
 
-        return $this-> belongsTo(Admin::class);
+        return $this->belongsTo(User::class);
     }
 }

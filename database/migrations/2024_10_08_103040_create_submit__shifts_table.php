@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('submit__shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('worker_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->dateTime('start_at');  
             $table->dateTime('end_at');  
 

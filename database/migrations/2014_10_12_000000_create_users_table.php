@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //workersテーブルをusersテーブルに変更
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 50);
+            //削除したいが、認証機能に影響がありそう
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();

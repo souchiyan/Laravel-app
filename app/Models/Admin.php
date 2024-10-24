@@ -2,32 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable 
 {
-    use HasFactory;
-    
-    public function workers()
-    {
-        return $this->hasMany(Worker::class);  
-    }
-    public function customers(){
+    use Notifiable;
 
-        return $this-> hasMany(Customer::class);
-    }
-    public function Memos(){
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
 
-        return $this-> hasMany(Memo::class);
-    }
-    public function shifts()
-    {
-        return $this->hasMany(Shift::class);  
-    }
-    public function need_shifts()
-    {
-        return $this->hasMany(Need_Shifts::class);  
-    }
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

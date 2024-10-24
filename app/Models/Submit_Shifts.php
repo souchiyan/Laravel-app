@@ -9,8 +9,8 @@ class Submit_Shifts extends Model
 {
     use HasFactory;
 
-    public function workers()
+    public function user()
     {
-        return $this->hasMany(Worker::class);  //ここ悩みどころ
+        return $this->belongsTo(User::class);  //ここ悩みどころ
     }
 }
