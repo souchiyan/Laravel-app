@@ -38,10 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::middleware('admin')->group(function () {  かもしれない。
 Route::prefix('admin')->namespace('Admin')->middleware('auth:is_admin')->group(function () {
-    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\LoginController@login');
-    Route::post('/logout', 'Auth\LoginController@logout')->name('admin.logout');
+    Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/admin', 'Auth\LoginController@login');
+    Route::post('/admin', 'Auth\LoginController@logout')->name('admin.logout');
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
 });
