@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Submit_ShiftController;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,5 @@ class UserController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
-    // その他の管理者用アクション
+    // その他の管理者用アクション   
 }
