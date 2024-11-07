@@ -12,13 +12,13 @@ return new class extends Migration {
     {
         Schema::create('submit__shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->dateTime('start_at');  
-            $table->dateTime('end_at');  
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->dateTime('start_at')->nullable();  
+            $table->dateTime('end_at')->nullable();  
+            $table->timestamps();
 
         });
     }
-
     /**
      * Reverse the migrations.
      */
