@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Submit_ShiftController;
+use App\Http\Controllers\Need_ShiftController;
+use App\Http\Controllers\ShiftController;
+use App\Models\Need_Shifts;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,9 +28,28 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get('/', function(){
+
+// シフト管理用ーーーーーーーーーーーーーーーーーーーーーーーー
+Route::get('/', function () {
     return Inertia::render('Index');
 });
+Route::get('/submit', [Submit_ShiftController::class, 'index']);
+
+Route::get('/shift', [Submit_ShiftController::class, 'shift']);
+Route::get('/shift/create', [Submit_ShiftController::class, 'create']);
+
+Route::post('/shift', [Submit_ShiftController::class, 'store']);
+Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
+
+Route::get('/submit_complete' ,function(){
+
+    return Inertia::render('Shift/submit_complete');
+});
+
+
+
+
+// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -47,4 +70,4 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth:is_admin')->group(f
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

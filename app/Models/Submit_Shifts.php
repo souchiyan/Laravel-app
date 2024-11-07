@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Submit_Shifts extends Model
 {
     use HasFactory;
-
     public function user()
     {
         return $this->belongsTo(User::class);  //ここ悩みどころ
     }
+    protected $fillable = [
+        'start_at',
+        'end_at',
+        'user_id',
+    ];
 }
