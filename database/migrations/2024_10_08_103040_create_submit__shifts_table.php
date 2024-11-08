@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('submit__shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();//nullable後で外す
             $table->dateTime('start_at')->nullable();  
             $table->dateTime('end_at')->nullable();  
             $table->timestamps();

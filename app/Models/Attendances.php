@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attendances extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id', 'start_at', 'end_at'
+    ];
 
     public function user()
     {

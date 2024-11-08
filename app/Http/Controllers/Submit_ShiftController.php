@@ -49,37 +49,7 @@ class Submit_ShiftController extends Controller
 
 
     }
-    // public function store(Request $request)
-    // {
-    //     $input = $request->all();
-
-    //     $formattedData = array_map(function ($item) use ($input) {
-    //         // start_atのdatetime変換
-    //         $startDateTime = Carbon::createFromFormat(
-    //             'Y-m-d H:i',
-    //             "{$input['year']}-{$input['month']}-{$item['date']} {$item['start_at']}"
-    //         );
-
-
-    //         // end_atのdatetime変換
-    //         $endDateTime = Carbon::createFromFormat(
-    //             'Y-m-d H:i',
-    //             "{$input['year']}-{$input['month']}-{$item['date']} {$item['end_at']}"
-    //         );
-
-    //         return [
-    //             'start_at' => $startDateTime,
-    //             'end_at' => $endDateTime,
-    //             // 他のデータもそのまま保持
-    //             'year' => $input['year'],
-    //             'month' => $input['month'],
-    //             'date' => $item['date'],
-    //         ];
-    //     }, $input['data']);
-
-    //     // 変換されたデータを表示
-    //     dd($formattedData);
-    // }
+    
     public function store(Request $request, Submit_Shifts $submit_shift)
     {
         $input = $request->all();

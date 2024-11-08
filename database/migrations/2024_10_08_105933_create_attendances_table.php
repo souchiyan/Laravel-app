@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();//nullable後で外す
             $table->dateTime('start_at');
             $table->dateTime('end_at');
+            $table->timestamps();
         });
     }
 
