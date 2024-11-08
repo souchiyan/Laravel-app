@@ -8,10 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Breaks extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'attendances_id',
+        'start_at',
+        'end_at'
+    ];
 
-    public function attendance(){
+    public function attendance()
+    {
 
-        return $this-> belongsTo(Attendances::class);
+        return $this->belongsTo(Attendances::class);
     }
 
 }
