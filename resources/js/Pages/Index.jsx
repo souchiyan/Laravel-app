@@ -3,7 +3,6 @@ import React from "react";
 function Index() {
     return (
         <>
-            <div>Index</div>
             <div>
                 <a href="/need">シフト編集</a>
                 <a href="/shift">シフト提出</a>

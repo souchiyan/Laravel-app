@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Submit_ShiftController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Need_ShiftController;
 use App\Http\Controllers\ShiftController;
 use App\Models\Need_Shifts;
@@ -41,7 +42,7 @@ Route::get('/shift/create', [Submit_ShiftController::class, 'create']);
 Route::post('/shift', [Submit_ShiftController::class, 'store']);
 Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
 
-Route::get('/submit_complete' ,function(){
+Route::get('/submit_complete', function () {
 
     return Inertia::render('Shift/submit_complete');
 });
@@ -50,6 +51,22 @@ Route::get('/submit_complete' ,function(){
 
 
 // ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+//出退勤用ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
+Route::get('/table', [AttendanceController::class, 'getAttendance'])->name('admin.index');
+
+Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
+
+
+
+
+
+
+
+
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
