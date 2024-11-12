@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name', 50);
             //削除したいが、認証機能に影響がありそう
             $table->string('email')->unique();
-            $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
