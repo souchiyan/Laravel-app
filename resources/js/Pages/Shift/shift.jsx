@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function Shift() {
     const startYear = 2023; // 選択可能な開始年
-    const endYear = 2030;   // 選択可能な終了年
+    const endYear = 2030; // 選択可能な終了年
 
     // 初期状態の年と月を設定
     const [selectedYear, setSelectedYear] = useState(startYear);
@@ -24,44 +24,46 @@ function Shift() {
     };
 
     return (
-        <div>
-            <h1>シフト管理</h1>
-            <form onSubmit={handleSubmit}>
-                {/* 年の選択 */}
-                <label>
-                    年:
-                    <select 
-                        value={selectedYear} 
-                        onChange={(e) => setSelectedYear(e.target.value)}
-                    >
-                        {years.map((year) => (
-                            <option key={year} value={year}>
-                                {year}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                
-                {/* 月の選択 */}
-                <label>
-                    月:
-                    <select 
-                        value={selectedMonth} 
-                        onChange={(e) => setSelectedMonth(e.target.value)}
-                    >
-                        {months.map((month) => (
-                            <option key={month} value={month}>
-                                {month}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+        <>
+            <div>
+                <h1>シフト管理</h1>
+                <form onSubmit={handleSubmit}>
+                    {/* 年の選択 */}
+                    <label>
+                        年:
+                        <select
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                        >
+                            {years.map((year) => (
+                                <option key={year} value={year}>
+                                    {year}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
 
-                <button type="submit">選択</button>
-            </form>
+                    {/* 月の選択 */}
+                    <label>
+                        月:
+                        <select
+                            value={selectedMonth}
+                            onChange={(e) => setSelectedMonth(e.target.value)}
+                        >
+                            {months.map((month) => (
+                                <option key={month} value={month}>
+                                    {month}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
 
-            <a href="/">戻る</a>
-        </div>
+                    <button type="submit">選択</button>
+                </form>
+
+                <a href="/dashboard">戻る</a>
+            </div>
+        </>
     );
 }
 

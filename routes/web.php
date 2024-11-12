@@ -21,17 +21,19 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+Route::get('/', [Submit_ShiftController::class, 'welcome']);
 
 // シフト管理用ーーーーーーーーーーーーーーーーーーーーーーーー
-Route::get('/', function () {
+Route::get('/index', function () {
     return Inertia::render('Index');
 });
 Route::get('/submit', [Submit_ShiftController::class, 'index']);
@@ -40,8 +42,8 @@ Route::get('/shift', [Submit_ShiftController::class, 'shift']);
 Route::get('/shift/create', [Submit_ShiftController::class, 'create']);
 
 Route::post('/shift', [Submit_ShiftController::class, 'store']);
-Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
 
+Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
 Route::get('/submit_complete', function () {
 
     return Inertia::render('Shift/submit_complete');
@@ -79,12 +81,22 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route::middleware('admin')->group(function () {  かもしれない。
-Route::prefix('admin')->namespace('Admin')->middleware('auth:is_admin')->group(function () {
-    Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('admin.login');
-    Route::post('/admin', 'Auth\LoginController@login');
-    Route::post('/admin', 'Auth\LoginController@logout')->name('admin.logout');
+// Route::prefix('admin')->namespace('Admin')->middleware('auth:is_admin')->group(function () {
+//     Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('admin.login');
+//     Route::post('/admin', 'Auth\LoginController@login');
+//     Route::post('/admin', 'Auth\LoginController@logout')->name('admin.logout');
 
-    Route::get('/', 'DashboardController@index')->name('admin.dashboard');
-});
+//     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
+// });
 
 require __DIR__ . '/auth.php';
+
+//Admin用ルートーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->middleware(['auth:admin', 'verified'])->name('dashboard');
+
+    require __DIR__ . '/admin.php';
+});
+//ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー

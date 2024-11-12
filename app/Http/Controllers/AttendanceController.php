@@ -40,10 +40,10 @@ class AttendanceController extends Controller
     public function getAttendance()
     {
         //with()を使ってattendanceに紐づいたbreaksも取得
-        $attendances = Attendances::with('breaks')->get();
+        $attendances = Attendances::with('breaks', 'user')->get();
 
         // Inertiaでデータを渡す
-        return Inertia::render('Attendance/Table', [
+        return Inertia::render('Admin/Attendance/Table', [
             'attendances' => $attendances,
         ]);
     }

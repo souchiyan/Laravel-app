@@ -1,9 +1,13 @@
+
+
 import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "react-modal";
+import AuthenticatedLayout from "@/Layouts/AdminAuthenticatedLayout";
+
 
 function NeedShift({ shifts }) {
     const [calendarEvents, setCalendarEvents] = useState([]);
@@ -18,7 +22,7 @@ function NeedShift({ shifts }) {
             return shiftDate === new Date(arg.dateStr).toDateString();
         });
 
-        setSelectedShift(shiftForDay || null); // shiftForDayが存在しない場合はnullをセット
+        setSelectedShift(shiftForDay || null);
         setSelectedDate(arg.date);
         setModalIsOpen(true);
         setIsConfirmed(false);
@@ -33,9 +37,9 @@ function NeedShift({ shifts }) {
     const handleConfirm = () => {
         if (selectedShift && isConfirmed) {
             const newEvent = {
-                title: `${formatTime(selectedShift.start_at)} ~ ${formatTime(
-                    selectedShift.end_at
-                )}`,
+                title: `${selectedShift.user.name}: ${formatTime(
+                    selectedShift.start_at
+                )} ~ ${formatTime(selectedShift.end_at)}`,
                 start: selectedShift.start_at,
                 end: selectedShift.end_at,
                 allDay: false,
@@ -49,17 +53,21 @@ function NeedShift({ shifts }) {
         setIsConfirmed((prev) => !prev);
     };
 
-    // 日付文字列から時刻を "HH:mm" 形式で取得する関数
     const formatTime = (dateString) => {
         const date = new Date(dateString);
-        const hours = date.getHours().toString().padStart(2, "0"); // 時を2桁表示
-        const minutes = date.getMinutes().toString().padStart(2, "0"); // 分を2桁表示
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
         return `${hours}:${minutes}`;
     };
 
     return (
+
+        <>
+    
         <div>
-            <h1>提出されたシフト</h1>
+            <h2>提出されたシフト</h2>
+            <a href="/admin/dashboard">戻る</a>
+
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
                 initialView="dayGridMonth"
@@ -67,7 +75,6 @@ function NeedShift({ shifts }) {
                 dateClick={handleDateClick}
                 locale="ja"
             />
-            {/* モーダル */}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -75,24 +82,25 @@ function NeedShift({ shifts }) {
                 ariaHideApp={false}
                 style={{
                     overlay: {
-                        backgroundColor: "rgba(0, 0, 0, 0.5)", // 背景を半透明ではなくしっかりした色に
-                        zIndex: 1000, // モーダルの背後の他の要素がクリックされないようにする
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        zIndex: 1000,
                     },
                     content: {
                         width: "300px",
                         margin: "auto",
                         padding: "20px",
                         borderRadius: "8px",
-                        backgroundColor: "#fff", // モーダルの背景色
-                        border: "1px solid #ccc", // 枠線を追加
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // 少し影をつけて立体感を出す
-                        zIndex: 1001, // モーダルのコンテンツのz-indexを設定して、背景と重ならないようにする
+                        backgroundColor: "#fff",
+                        border: "1px solid #ccc",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                        zIndex: 1001,
                     },
                 }}
             >
                 <h2>シフト確認</h2>
                 {selectedShift ? (
                     <>
+                        <p>ユーザー: {selectedShift.user.name}</p>
                         <p>
                             日付: {selectedDate && selectedDate.toDateString()}
                         </p>
@@ -140,6 +148,7 @@ function NeedShift({ shifts }) {
                 )}
             </Modal>
         </div>
+        </>
     );
 }
 
