@@ -49,7 +49,7 @@ class Submit_ShiftController extends Controller
 
 
     }
-    
+
     public function store(Request $request, Submit_Shifts $submit_shift)
     {
         $input = $request->all();
@@ -84,7 +84,6 @@ class Submit_ShiftController extends Controller
             ];
         }, $input['data']);
 
-        // dd($formattedData);
 
         foreach ($formattedData as $data) {
             Submit_Shifts::create($data);
@@ -94,11 +93,17 @@ class Submit_ShiftController extends Controller
     }
     public function getShifts()
     {
-        $shifts = Submit_Shifts::all(); // 全シフトデータを取得
-        // $userName = Auth::user()->name;
+        $shifts = Submit_Shifts::with('user:id,name')->get();
 
-        return Inertia::render('Shift/need_shift', ['shifts' => $shifts]);
+        return Inertia::render('Admin/Shift/need_shift', ['shifts' => $shifts]);
     }
+
+    public function welcome()
+    {
+        $shifts = Submit_Shifts::with('user')->get();
+        return Inertia::render('Welcome', ['shifts' => $shifts]);
+    }
+
 }
 
 

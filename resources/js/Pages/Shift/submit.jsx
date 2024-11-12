@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "@inertiajs/react";
 
-
 function submit(props) {
     const { periods, dates, year, month } = props;
 
@@ -95,7 +94,7 @@ function submit(props) {
                 <button type="submit">データを送信</button>
             </form>
 
-            <a href="/shift">戻る</a>
+            <a href="/dashboard">戻る</a>
         </>
     );
 }
