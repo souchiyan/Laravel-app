@@ -111,6 +111,7 @@ function Attendance() {
                     </button>
                 )}
                 <button type="submit">送信</button>
+                <a href="/dashboard">戻る</a>
             </form>
         </div>
     );
