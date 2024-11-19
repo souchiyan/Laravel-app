@@ -16,6 +16,28 @@ class AttendanceController extends Controller
         return Inertia::render('Attendance/attendance');
     }
 
+    // public function store(Request $request)
+    // {
+    //     $input = $request->all();
+
+    //     // 出勤または退勤データを登録
+    //     $attendance = Attendances::updateOrCreate(
+    //         ['user_id' => auth()->id()],
+    //         $input
+    //     );
+
+    //     // 休憩データの登録
+    //     if (isset($input['break_start_at']) || isset($input['break_end_at'])) {
+    //         $break = new Breaks();
+    //         $break->attendances_id = $attendance->id; // 関連付け
+    //         $break->start_at = $input['break_start_at'] ?? null;
+    //         $break->end_at = $input['break_end_at'] ?? null;
+    //         $break->save();
+    //     }
+
+    //     return redirect()->route('attendance.index');
+    // }
+
     public function store(Request $request)
     {
         $input = $request->all();
@@ -35,8 +57,14 @@ class AttendanceController extends Controller
             $break->save();
         }
 
-        return redirect()->route('attendance.index');
+        // リダイレクト時に最新のデータを渡す
+        return Inertia::render('Attendance/attendance', [
+            'attendance' => $attendance
+        ]);
     }
+
+
+
     public function getAttendance()
     {
         //with()を使ってattendanceに紐づいたbreaksも取得
@@ -47,5 +75,7 @@ class AttendanceController extends Controller
             'attendances' => $attendances,
         ]);
     }
+
+
 
 }

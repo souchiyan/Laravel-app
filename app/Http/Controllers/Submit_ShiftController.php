@@ -104,6 +104,8 @@ class Submit_ShiftController extends Controller
         return Inertia::render('Welcome', ['shifts' => $shifts]);
     }
 
+
+
 }
 
 
