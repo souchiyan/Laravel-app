@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('breaks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('attendances_id')->constrained();
-            $table->dateTime('start_at');
-            $table->dateTime('end_at');
+            $table->dateTime('start_at')->nullable();
+            $table->dateTime('end_at')->nullable();
             $table->timestamps();
         });
     }

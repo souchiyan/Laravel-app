@@ -30,43 +30,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/', [Submit_ShiftController::class, 'welcome']);
-
-// シフト管理用ーーーーーーーーーーーーーーーーーーーーーーーー
-Route::get('/index', function () {
-    return Inertia::render('Index');
-});
-Route::get('/submit', [Submit_ShiftController::class, 'index']);
-
-Route::get('/shift', [Submit_ShiftController::class, 'shift']);
-Route::get('/shift/create', [Submit_ShiftController::class, 'create']);
-
-Route::post('/shift', [Submit_ShiftController::class, 'store']);
-
-Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
-Route::get('/submit_complete', function () {
-
-    return Inertia::render('Shift/submit_complete');
-});
-
-
-
-
-// ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-//出退勤用ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-
-Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
-Route::get('/table', [AttendanceController::class, 'getAttendance'])->name('admin.index');
-
-Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
-
-
-
-
-
-
-
+// Route::get('/', [Submit_ShiftController::class, 'welcome']);
 
 //ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
@@ -78,21 +42,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // シフト管理用ーーーーーーーーーーーーーーーーーーーーーーーー
+    
+    Route::get('/submit', [Submit_ShiftController::class, 'index']);
+
+    Route::get('/shift', [Submit_ShiftController::class, 'shift']);
+    Route::get('/shift/create', [Submit_ShiftController::class, 'create']);
+
+    Route::post('/shift', [Submit_ShiftController::class, 'store']);
+    // ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+    //出退勤用ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+    Route::get('/attendances', [AttendanceController::class, 'index'])->name('attendance.index');
+
+    Route::post('/attendances', [AttendanceController::class, 'store'])->name('attendance.store');
 });
-
-// Route::middleware('admin')->group(function () {  かもしれない。
-// Route::prefix('admin')->namespace('Admin')->middleware('auth:is_admin')->group(function () {
-//     Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('admin.login');
-//     Route::post('/admin', 'Auth\LoginController@login');
-//     Route::post('/admin', 'Auth\LoginController@logout')->name('admin.logout');
-
-//     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
-// });
 
 require __DIR__ . '/auth.php';
 
 //Admin用ルートーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/need', [Submit_ShiftController::class, 'getShifts']);
+    Route::get('/table', [AttendanceController::class, 'getAttendance'])->name('admin.index');
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->middleware(['auth:admin', 'verified'])->name('dashboard');
