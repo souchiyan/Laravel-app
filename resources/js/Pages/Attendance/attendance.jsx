@@ -2,24 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 
 function Attendance() {
-    const { data, setData, post } = useForm({
+    const { data, setData, post, reset } = useForm({
         start_at: localStorage.getItem("start_at") || "",
         end_at: localStorage.getItem("end_at") || "",
-        break_start_at: localStorage.getItem("break_start_at") || "",
-        break_end_at: localStorage.getItem("break_end_at") || "",
+        break_start_at: "",
+        break_end_at: "",
     });
 
     useEffect(() => {
         localStorage.setItem("start_at", data.start_at);
         localStorage.setItem("end_at", data.end_at);
-        localStorage.setItem("break_start_at", data.break_start_at);
-        localStorage.setItem("break_end_at", data.break_end_at);
+
+        // 休憩データが空の場合はlocalStorageから削除
+        if (!data.break_start_at) localStorage.removeItem("break_start_at");
+        if (!data.break_end_at) localStorage.removeItem("break_end_at");
     }, [data]);
 
-    const [clockInTime, setClockInTime] = useState(null);
-    const [clockOutTime, setClockOutTime] = useState(null);
-    const [breakStartTime, setBreakStartTime] = useState(null);
-    const [breakEndTime, setBreakEndTime] = useState(null);
     const [modalMessage, setModalMessage] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [onBreak, setOnBreak] = useState(
@@ -40,21 +38,18 @@ function Attendance() {
 
     const handleClockIn = () => {
         const time = getCurrentTime();
-        setClockInTime(time);
         setData("start_at", time);
         showModalWithMessage(`${time} - 出勤しました`);
     };
 
     const handleClockOut = () => {
         const time = getCurrentTime();
-        setClockOutTime(time);
         setData("end_at", time);
         showModalWithMessage(`${time} - 退勤しました`);
     };
 
     const handleBreakStart = () => {
         const time = getCurrentTime();
-        setBreakStartTime(time);
         setOnBreak(true);
         setData("break_start_at", time);
         localStorage.setItem("onBreak", "true");
@@ -63,7 +58,6 @@ function Attendance() {
 
     const handleBreakEnd = () => {
         const time = getCurrentTime();
-        setBreakEndTime(time);
         setOnBreak(false);
         setData("break_end_at", time);
         localStorage.setItem("onBreak", "false");
@@ -72,10 +66,19 @@ function Attendance() {
 
     const handleSendPosts = (e) => {
         e.preventDefault();
+
+        // 不要なデータを除外
+        const filteredData = Object.fromEntries(
+            Object.entries(data).filter(
+                ([key, value]) => value !== null && value !== ""
+            )
+        );
+
         post("/attendances", {
+            data: filteredData,
             onFinish: () => {
                 showModalWithMessage("送信が完了しました。お疲れさまでした。");
-                // 送信後にローカルストレージからデータを削除
+                reset(); // フォームデータをリセット
                 localStorage.removeItem("start_at");
                 localStorage.removeItem("end_at");
                 localStorage.removeItem("break_start_at");
@@ -88,12 +91,12 @@ function Attendance() {
     const showModalWithMessage = (message) => {
         setModalMessage(message);
         setShowModal(true);
-        setTimeout(() => setShowModal(false), 4000); // 4秒後にモーダルを自動的に閉じる
+        setTimeout(() => setShowModal(false), 4000);
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <div className="bg-gray-600 flex flex-row items-center justify-between py-6 px-4 md:px-8 mb-10">
+        <div>
+            <div className="bg-gray-600 flex flex-row items-center justify-between py-6 px-4 md:px-8 mb-10 flex-nowrap">
                 <div>
                     <a
                         href="/dashboard"
@@ -110,29 +113,29 @@ function Attendance() {
             {showModal && (
                 <div className="modal fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-4 rounded-lg">
-                        <p>{modalMessage}</p>
+                        <p className="font-bold text-xl">{modalMessage}</p>
                     </div>
                 </div>
             )}
 
-            <form onSubmit={handleSendPosts} className="space-y-4">
+            <form onSubmit={handleSendPosts} className="space-y-8">
                 <input type="hidden" value={data.start_at} />
                 <input type="hidden" value={data.end_at} />
                 <input type="hidden" value={data.break_start_at} />
                 <input type="hidden" value={data.break_end_at} />
 
-                <div className="flex justify-center space-x-4">
+                <div className="flex justify-center space-x-8">
                     <button
                         type="button"
                         onClick={handleClockIn}
-                        className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"
+                        className="bg-blue-500 text-white px-8 py-4 rounded-lg hover:bg-blue-600 transition"
                     >
                         出勤
                     </button>
                     <button
                         type="button"
                         onClick={handleClockOut}
-                        className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-8 py-4 rounded-lg hover:bg-red-600 transition"
                     >
                         退勤
                     </button>
@@ -140,7 +143,7 @@ function Attendance() {
                         <button
                             type="button"
                             onClick={handleBreakEnd}
-                            className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"
+                            className="bg-green-500 text-white px-8 py-4 rounded-lg hover:bg-green-600 transition"
                         >
                             休憩終了
                         </button>
@@ -148,7 +151,7 @@ function Attendance() {
                         <button
                             type="button"
                             onClick={handleBreakStart}
-                            className="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition"
+                            className="bg-yellow-500 text-white px-8 py-4 rounded-lg hover:bg-yellow-600 transition"
                         >
                             休憩
                         </button>
@@ -158,7 +161,7 @@ function Attendance() {
                 <div className="flex justify-center">
                     <button
                         type="submit"
-                        className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition"
+                        className="bg-gray-500 text-white px-8 py-4 rounded-lg hover:bg-gray-600 transition"
                     >
                         送信
                     </button>
