@@ -89,7 +89,6 @@ class Submit_ShiftController extends Controller
             Submit_Shifts::create($data);
         }
 
-        return redirect('/submit_complete');
     }
     public function getShifts()
     {
