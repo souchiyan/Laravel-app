@@ -28,7 +28,7 @@ function Shift() {
         <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-center px-4">
             {/* ヘッダー */}
             <h1 className="text-3xl font-bold text-gray-700 mb-8">
-                シフト管理
+                シフト提出
             </h1>
 
             {/* フォーム */}
