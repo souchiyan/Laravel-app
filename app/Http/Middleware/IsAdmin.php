@@ -19,15 +19,18 @@ class IsAdmin
     //     }
     //     return redirect('/'); // 管理者でない場合
     // }
-    public function handle($request, Closure $next)
+   // app/Http/Middleware/IsAdmin.php
+
+public function handle($request, Closure $next)
 {
     if ($request->is('admin/*')) {
         config(['session.cookie' => config('session.admin_cookie')]);
     } else {
-        config(['session.cookie' => config('session.user_cookie')]);
+        config(['session.cookie' => config('session.cookie')]);
     }
 
     return $next($request);
 }
+
 
 }
