@@ -12,6 +12,7 @@ export default function Login({ status, canResetPassword }) {
         email: "",
         password: "",
         remember: false,
+        _token: this.$page.props.csrf_token,
     });
 
     useEffect(() => {
