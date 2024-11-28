@@ -12,7 +12,6 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
-        _token: this.$page.props.csrf_token,
     });
 
     useEffect(() => {
