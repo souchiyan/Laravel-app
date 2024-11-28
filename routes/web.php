@@ -67,7 +67,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/table', [AttendanceController::class, 'getAttendance'])->name('admin.index');
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
-    })->middleware(['auth:admin', 'verified'])->name('dashboard');
+    })->middleware(['auth:admin', 'verified', 'is_admin'])->name('dashboard');
 
     require __DIR__ . '/admin.php';
 });
